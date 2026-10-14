@@ -24,7 +24,8 @@ export const blank = (): Card => ({
   pinyin: null,
 })
 
-export const traditional = (s: string) => toTw(s)
+// Blank when identical to the simplified text, so the field only shows real differences.
+export const traditional = (s: string) => (toTw(s) === s ? '' : toTw(s))
 
 export const pinyinOf = (s: string) => pinyin(s)
 

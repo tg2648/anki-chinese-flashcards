@@ -17,6 +17,8 @@ describe('traditional', () => {
   it('converts characters', () => {
     expect(traditional('为什么')).toBe('為什麼')
     expect(traditional('学习')).toBe('學習')
+    expect(traditional('学校')).toBe('學校')
+    expect(traditional('你好')).toBe('')
   })
 })
 
@@ -88,12 +90,12 @@ describe('toAnkiTsv', () => {
       [blank(), card({ front: '  ', back: 'orphan' }), card({ front: '中' })],
       opts,
     )
-    expect(tsv.split('\n').slice(3)).toEqual(['中\t中\t\tzhōng\t\t'])
+    expect(tsv.split('\n').slice(3)).toEqual(['中\t\t\tzhōng\t\t'])
   })
 
   it('trims fields and quotes tabs and quotes', () => {
     const tsv = toAnkiTsv([card({ front: ' 中 ', back: 'a\tb', example: 'say "hi"' })], opts)
-    expect(tsv.split('\n').pop()).toBe('中\t中\t"a\tb"\tzhōng\t"say ""hi"""\t')
+    expect(tsv.split('\n').pop()).toBe('中\t\t"a\tb"\tzhōng\t"say ""hi"""\t')
   })
 })
 

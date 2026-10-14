@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Status
 
-Freshly scaffolded Vue 3 + Vite + TypeScript app (from `create-vue`). No app logic yet: `src/App.vue` is the template placeholder. Runs in a devcontainer (Node 24).
+Vue 3 + Vite + TypeScript app that generates Anki TSV files for Chinese flashcards. Logic is in `src/cards.ts` and the UI is `src/App.vue`. Runs in a devcontainer (Node 24).
 
 ## Commands
 

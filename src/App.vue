@@ -103,7 +103,7 @@ function download() {
           <td>
             <input
               :value="resolve(row).traditional"
-              :class="{ edited: row.traditional !== null }"
+              :class="row.traditional === null ? 'generated' : 'edited'"
               tabindex="-1"
               aria-label="Traditional"
               @input="editGenerated(row, 'traditional', $event)"
@@ -113,7 +113,7 @@ function download() {
           <td>
             <input
               :value="resolve(row).pinyin"
-              :class="{ edited: row.pinyin !== null }"
+              :class="row.pinyin === null ? 'generated' : 'edited'"
               tabindex="-1"
               aria-label="Pinyin"
               @input="editGenerated(row, 'pinyin', $event)"
@@ -175,6 +175,10 @@ input {
 }
 .edited {
   font-style: italic;
+  color: #555;
+}
+.generated {
+  background: #f0f4f8;
   color: #555;
 }
 .missing {

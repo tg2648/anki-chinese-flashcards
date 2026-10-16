@@ -20,6 +20,7 @@ export const blank = (): Card => ({
   back: '',
   example: '',
   exampleTranslation: '',
+  // null means "no override, generate it."; a string indicates a user-supplied value
   traditional: null,
   pinyin: null,
 })

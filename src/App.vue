@@ -157,8 +157,9 @@ function download() {
       </li>
       <li>Rows without Simplified are skipped.</li>
       <li>
-        You can edit the Pinyin and Traditional cells if you disagree with the automatic conversion.
-        Clearing them and leaving restores the generated value.
+        You can edit the Pinyin and Traditional cells if you disagree with the automatic conversion
+        (e.g., for polyphonic characters like 行 that can be xíng or háng). Clearing the edited
+        values and leaving the cell restores the generated value.
       </li>
     </ul>
 

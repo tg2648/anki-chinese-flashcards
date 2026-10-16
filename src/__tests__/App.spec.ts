@@ -39,15 +39,15 @@ afterEach(() => wrapper.unmount())
 
 describe('App', () => {
   it('generates Traditional and Pinyin live', async () => {
-    await type('Simplified', '学习')
+    await type('Simplified (Front)', '学习')
     expect(value('Traditional')).toBe('學習')
     expect(value('Pinyin')).toBe('xué xí')
   })
 
   it('waits for IME composition to end', async () => {
-    const input = cell('Simplified')
+    const input = cell('Simplified (Front)')
     await input.trigger('compositionstart')
-    await type('Simplified', '学习')
+    await type('Simplified (Front)', '学习')
     expect(value('Traditional')).toBe('')
     expect(value('Pinyin')).toBe('')
     await input.trigger('compositionend')
@@ -57,26 +57,26 @@ describe('App', () => {
   })
 
   it('keeps exactly one trailing blank row without a remove button', async () => {
-    await type('Simplified', '中')
-    expect(inputs('Simplified')).toHaveLength(2)
-    await type('Simplified', '')
-    expect(inputs('Simplified')).toHaveLength(1)
+    await type('Simplified (Front)', '中')
+    expect(inputs('Simplified (Front)')).toHaveLength(2)
+    await type('Simplified (Front)', '')
+    expect(inputs('Simplified (Front)')).toHaveLength(1)
     expect(wrapper.findAll('[aria-label="Remove row"]')).toHaveLength(0)
   })
 
   it('keeps values and focus when deleting a middle row', async () => {
-    for (const [i, w] of ['一', '二', '三'].entries()) await type('Simplified', w, i)
-    const third = cell('Simplified', 2).element as HTMLInputElement
+    for (const [i, w] of ['一', '二', '三'].entries()) await type('Simplified (Front)', w, i)
+    const third = cell('Simplified (Front)', 2).element as HTMLInputElement
     third.focus()
     await wrapper.findAll('[aria-label="Remove row"]')[0]!.trigger('click')
     await nextTick()
-    expect(value('Simplified', 0)).toBe('二')
-    expect(value('Simplified', 1)).toBe('三')
+    expect(value('Simplified (Front)', 0)).toBe('二')
+    expect(value('Simplified (Front)', 1)).toBe('三')
     expect(document.activeElement).toBe(third)
   })
 
   it('lets you edit Pinyin and restores the generated value on change', async () => {
-    await type('Simplified', '银行')
+    await type('Simplified (Front)', '银行')
     expect(cell('Pinyin').classes()).not.toContain('edited')
     await type('Pinyin', '')
     expect(value('Pinyin')).toBe('')
@@ -89,38 +89,38 @@ describe('App', () => {
     expect(cell('Pinyin').classes()).not.toContain('edited')
   })
 
-  it('exports manual edits and resets them when Simplified changes', async () => {
-    await type('Simplified', '银行')
+  it('exports manual edits and resets them when Simplified (Front) changes', async () => {
+    await type('Simplified (Front)', '银行')
     await type('Pinyin', 'yín xíng')
     expect(await exported()).toContain('yín xíng')
-    await type('Simplified', '学习')
+    await type('Simplified (Front)', '学习')
     expect(value('Pinyin')).toBe('xué xí')
   })
 
-  it('warns about and skips rows without Simplified', async () => {
-    await type('English', 'orphan')
-    await type('Simplified', '中', 1)
+  it('warns about and skips rows without Simplified (Front)', async () => {
+    await type('English (Back)', 'orphan')
+    await type('Simplified (Front)', '中', 1)
     expect(wrapper.findAll('tbody tr')[0]!.classes()).toContain('missing')
     expect(await exported()).not.toContain('orphan')
   })
 
-  it('enables Download only when a row has Simplified', async () => {
+  it('enables Download only when a row has Simplified (Front)', async () => {
     expect(button('Download for Anki').attributes('disabled')).toBeDefined()
-    await type('English', 'hello')
+    await type('English (Back)', 'hello')
     expect(button('Download for Anki').attributes('disabled')).toBeDefined()
-    await type('Simplified', '你好')
+    await type('Simplified (Front)', '你好')
     expect(button('Download for Anki').attributes('disabled')).toBeUndefined()
   })
 
   it('restores rows and settings after remount', async () => {
-    await type('Simplified', '学习')
+    await type('Simplified (Front)', '学习')
     await wrapper.find('input[placeholder="Chinese::HSK1"]').setValue('Chinese')
     await wrapper.find('input[placeholder="Chinese"]').setValue('Basic')
     await nextTick()
     wrapper.unmount()
     mountApp()
-    expect(value('Simplified')).toBe('学习')
-    expect(inputs('Simplified')).toHaveLength(2)
+    expect(value('Simplified (Front)')).toBe('学习')
+    expect(inputs('Simplified (Front)')).toHaveLength(2)
     expect(
       (wrapper.find('input[placeholder="Chinese::HSK1"]').element as HTMLInputElement).value,
     ).toBe('Chinese')
@@ -133,20 +133,20 @@ describe('App', () => {
     wrapper.unmount()
     localStorage.setItem('anki-cards', '{not json')
     mountApp()
-    expect(inputs('Simplified')).toHaveLength(1)
+    expect(inputs('Simplified (Front)')).toHaveLength(1)
   })
 
   it('clears rows but keeps settings only when confirmed', async () => {
     await wrapper.find('input[placeholder="Chinese::HSK1"]').setValue('Chinese')
-    await type('Simplified', '学习')
+    await type('Simplified (Front)', '学习')
     vi.stubGlobal('confirm', () => false)
     await button('Clear all').trigger('click')
-    expect(value('Simplified')).toBe('学习')
+    expect(value('Simplified (Front)')).toBe('学习')
     vi.stubGlobal('confirm', () => true)
     await button('Clear all').trigger('click')
     await nextTick()
-    expect(inputs('Simplified')).toHaveLength(1)
-    expect(value('Simplified')).toBe('')
+    expect(inputs('Simplified (Front)')).toHaveLength(1)
+    expect(value('Simplified (Front)')).toBe('')
     expect(
       (wrapper.find('input[placeholder="Chinese::HSK1"]').element as HTMLInputElement).value,
     ).toBe('Chinese')
@@ -156,7 +156,7 @@ describe('App', () => {
   it('writes deck and note type headers into the file', async () => {
     await wrapper.find('input[placeholder="Chinese::HSK1"]').setValue('Chinese')
     await wrapper.find('input[placeholder="Chinese"]').setValue('Basic')
-    await type('Simplified', '学习')
+    await type('Simplified (Front)', '学习')
     let tsv = await exported()
     expect(tsv).toContain('#deck:Chinese\n')
     expect(tsv).toContain('#notetype:Basic\n')

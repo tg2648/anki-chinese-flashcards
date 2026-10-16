@@ -21,7 +21,7 @@ function load(): Card[] {
 const rows = ref<Card[]>(load())
 const deck = ref(localStorage.getItem('anki-deck') ?? '')
 const notetype = ref(localStorage.getItem('anki-notetype') ?? '')
-const showExamples = ref(true)
+const showExamples = ref(false)
 
 watch(
   rows,

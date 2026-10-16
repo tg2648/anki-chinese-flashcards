@@ -141,8 +141,13 @@ function download() {
 
     <ul class="hint">
       <li>
-        Your Anki note type needs these fields, in this order: Front, Traditional, Back, Pinyin,
-        Example, Example Translation.
+        Best used with this custom
+        <a href="https://tgul.dev/articles/my-anki-template-for-chinese/">Anki note template</a>
+        (that also features stroke order animations and audio).
+      </li>
+      <li>
+        If using your own note template, it needs these fields, in this order: Front, Traditional,
+        Back, Pinyin, Example, Example Translation.
       </li>
       <li>
         Deck and Note type must match the names in Anki exactly. If you leave one blank, you pick it

@@ -64,7 +64,7 @@ function download() {
 
 <template>
   <main>
-    <h1>Anki Chinese flashcards</h1>
+    <h1>Anki Chinese Flashcards</h1>
     <div class="settings">
       <label>Deck <input v-model="deck" placeholder="Chinese::HSK1" /></label>
       <label>Note type <input v-model="notetype" placeholder="Chinese" /></label>

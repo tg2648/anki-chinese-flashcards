@@ -47,6 +47,7 @@ export function pinyinOf(s: string) {
   return pinyin(s)
 }
 
+/** Returns the card's traditional and pinyin values: the user's override if set, else the generated one. */
 export const resolve = (card: Card) => ({
   traditional: card.traditional ?? traditional(card.front),
   pinyin: card.pinyin ?? pinyinOf(card.front),
@@ -57,6 +58,10 @@ export const isEmpty = (c: Card) =>
     (v) => !v?.trim(),
   )
 
+/**
+ * Ensures the list ends with exactly one blank row: extra trailing blanks are trimmed and one is
+ * added if missing. Returns the same array when it already complies.
+ */
 export function withTrailingBlank(rows: Card[]): Card[] {
   let end = rows.length
   while (end > 0 && isEmpty(rows[end - 1]!)) end--
@@ -64,8 +69,13 @@ export function withTrailingBlank(rows: Card[]): Card[] {
   return end < rows.length ? rows.slice(0, end + 1) : [...rows, blank()]
 }
 
+/** Wraps a field in double quotes (escaping inner quotes) if it has a tab, newline, CR or quote. */
 const quote = (s: string) => (/[\t\n\r"]/.test(s) ? `"${s.replaceAll('"', '""')}"` : s)
 
+/**
+ * Builds Anki import text: header directives (separator, notetype, deck, columns) followed by one
+ * tab-separated line per card. Cards without a front are skipped; fields are trimmed and quoted.
+ */
 export function toAnkiTsv(cards: Card[], { deck, notetype }: { deck: string; notetype: string }) {
   const lines = ['#separator:tab', '#html:false']
   if (notetype.trim()) lines.push(`#notetype:${notetype.trim()}`)
@@ -87,6 +97,7 @@ export function toAnkiTsv(cards: Card[], { deck, notetype }: { deck: string; not
   return lines.join('\n')
 }
 
+/** Triggers a browser download of the given text as `anki-cards.txt`. */
 export function downloadTsv(text: string) {
   const url = URL.createObjectURL(new Blob([text], { type: 'text/tab-separated-values' }))
   const a = document.createElement('a')

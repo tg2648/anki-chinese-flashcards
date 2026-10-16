@@ -37,10 +37,12 @@ watch(notetype, (v) => localStorage.setItem('anki-notetype', v))
 
 const canDownload = computed(() => rows.value.some((r) => r.front.trim()))
 
+/** Stores the user's edit of a generated field (traditional or pinyin) as an override on the row. */
 function editGenerated(row: Card, field: 'traditional' | 'pinyin', e: Event) {
   row[field] = (e.target as HTMLInputElement).value
 }
 
+/** Clears the override if the field was left blank, so the generated value is used again. */
 function restoreIfBlank(row: Card, field: 'traditional' | 'pinyin') {
   if (!row[field]?.trim()) row[field] = null
 }

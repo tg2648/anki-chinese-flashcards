@@ -157,35 +157,174 @@ function download() {
   </main>
 </template>
 
+<style>
+:root {
+  --bg: #f7f8fa;
+  --surface: #fff;
+  --border: #e3e6ea;
+  --text: #1f2328;
+  --muted: #6b7280;
+  --accent: #2563eb;
+  --accent-soft: #eff4ff;
+  --warn: #fff7e0;
+  --radius: 8px;
+  color-scheme: light;
+}
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family:
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    'PingFang SC',
+    'Microsoft YaHei',
+    sans-serif;
+  line-height: 1.5;
+}
+</style>
+
 <style scoped>
-table {
-  width: 100%;
-  border-collapse: collapse;
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0 0 1.5rem;
+}
+.settings {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.settings label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  width: 16rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--muted);
 }
 input {
   width: 100%;
   box-sizing: border-box;
-  font-size: 1.1rem;
+  padding: 0.5rem 0.65rem;
+  font: inherit;
+  font-size: 1rem;
+  color: inherit;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  outline: none;
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
 }
-.settings,
-.actions {
-  display: flex;
-  gap: 1rem;
-  margin: 1rem 0;
+input:focus-visible {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+th {
+  padding: 0.6rem 0.75rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-align: left;
+  color: var(--muted);
+  border-bottom: 1px solid var(--border);
+}
+td {
+  padding: 0.25rem;
+  border-bottom: 1px solid var(--border);
+}
+tbody tr:last-child td {
+  border-bottom: none;
+}
+td input {
+  border-color: transparent;
+  background: transparent;
+}
+td input:hover {
+  border-color: var(--border);
+}
+td:first-child input {
+  font-size: 1.15rem;
+}
+.generated {
+  color: var(--muted);
+  background: var(--bg);
 }
 .edited {
   font-style: italic;
-  color: #555;
-}
-.generated {
-  background: #f0f4f8;
-  color: #555;
 }
 .missing {
-  background: #fff3cd;
+  background: var(--warn);
+}
+button {
+  padding: 0.5rem 1rem;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+button:hover:not(:disabled) {
+  background: var(--bg);
+}
+button:focus-visible {
+  outline: 3px solid var(--accent-soft);
+  border-color: var(--accent);
+}
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+td button {
+  padding: 0.25rem 0.5rem;
+  color: var(--muted);
+  background: none;
+  border: none;
+}
+td button:hover {
+  color: #dc2626;
+}
+.actions {
+  display: flex;
+  gap: 0.75rem;
+  margin: 1.5rem 0;
+}
+.actions button:first-child {
+  color: #fff;
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.actions button:first-child:hover:not(:disabled) {
+  background: #1d4ed8;
 }
 .hint {
-  font-size: 0.9rem;
-  color: #555;
+  padding-left: 1.1rem;
+  font-size: 0.875rem;
+  color: var(--muted);
 }
 </style>

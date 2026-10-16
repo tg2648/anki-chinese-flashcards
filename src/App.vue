@@ -92,12 +92,19 @@ function download() {
             <input v-model="row.front" aria-label="Simplified (Front)" @input="resetEdits(row)" />
           </td>
           <td><input v-model="row.back" aria-label="English (Back)" /></td>
-          <td><input v-model="row.example" aria-label="Example" /></td>
-          <td><input v-model="row.exampleTranslation" aria-label="Example Translation" /></td>
+          <td><input v-model="row.example" tabindex="-1" aria-label="Example" /></td>
+          <td>
+            <input
+              v-model="row.exampleTranslation"
+              tabindex="-1"
+              aria-label="Example Translation"
+            />
+          </td>
           <td>
             <input
               :value="resolve(row).traditional"
               :class="{ edited: row.traditional !== null }"
+              tabindex="-1"
               aria-label="Traditional"
               @input="editGenerated(row, 'traditional', $event)"
               @change="restoreIfBlank(row, 'traditional')"
@@ -107,13 +114,19 @@ function download() {
             <input
               :value="resolve(row).pinyin"
               :class="{ edited: row.pinyin !== null }"
+              tabindex="-1"
               aria-label="Pinyin"
               @input="editGenerated(row, 'pinyin', $event)"
               @change="restoreIfBlank(row, 'pinyin')"
             />
           </td>
           <td>
-            <button v-if="i < rows.length - 1" aria-label="Remove row" @click="remove(row)">
+            <button
+              v-if="i < rows.length - 1"
+              tabindex="-1"
+              aria-label="Remove row"
+              @click="remove(row)"
+            >
               ✕
             </button>
           </td>

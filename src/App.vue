@@ -65,7 +65,7 @@ function download() {
 
 <template>
   <main>
-    <h1>Anki Chinese Flashcards</h1>
+    <h1>Anki Chinese Flashcard Generator</h1>
     <div class="settings">
       <label>Deck <input v-model="deck" placeholder="Chinese::HSK1" /></label>
       <label>Note type <input v-model="notetype" placeholder="Chinese" /></label>
@@ -142,7 +142,9 @@ function download() {
     <ul class="hint">
       <li>
         Best used with this custom
-        <a href="https://tgul.dev/articles/my-anki-template-for-chinese/">Anki note template</a>
+        <a href="https://tgul.dev/articles/my-anki-template-for-chinese/" target="_blank"
+          >Anki note template</a
+        >
         (that also features stroke order animations and audio).
       </li>
       <li>
@@ -150,19 +152,19 @@ function download() {
         Back, Pinyin, Example, Example Translation.
       </li>
       <li>
-        Deck and Note type must match the names in Anki exactly. If you leave one blank, you pick it
-        in the import dialog.
+        Deck and Note type must match the names in Anki exactly. If you leave one blank, you will
+        pick it in the Anki import dialog.
       </li>
       <li>Rows without Simplified are skipped.</li>
       <li>
-        In the Pinyin and Traditional cells, clearing a cell and leaving it restores the generated
-        value.
+        You can edit the Pinyin and Traditional cells if you disagree with the automatic conversion.
+        Clearing them and leaving restores the generated value.
       </li>
     </ul>
 
     <p class="hint">
-      Built with <a href="https://github.com/nk2028/opencc-js">opencc-js</a> and
-      <a href="https://github.com/zh-lx/pinyin-pro">pinyin-pro</a>.
+      Built with <a href="https://github.com/nk2028/opencc-js" target="_blank">opencc-js</a> and
+      <a href="https://github.com/zh-lx/pinyin-pro" target="_blank">pinyin-pro</a>.
     </p>
 
     <a

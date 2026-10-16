@@ -1,5 +1,6 @@
+import { ref } from 'vue'
 import { Converter } from 'opencc-js/cn2t'
-import { pinyin } from 'pinyin-pro'
+import { pinyin, addDict } from 'pinyin-pro'
 
 // `tw` converts characters only; `twp` would also swap vocabulary (软件→軟體), wrong for flashcards.
 const toTw = Converter({ from: 'cn', to: 'tw' })
@@ -30,7 +31,21 @@ export function traditional(s: string) {
   const t = toTw(s)
   return t === s ? '' : t
 }
-export const pinyinOf = (s: string) => pinyin(s)
+
+const dictLoaded = ref(false)
+
+// The modern dictionary fixes words the default gets wrong (京都 → jīng dū), but it is ~1.2 MB
+// gzipped, so it loads as its own chunk after the app starts.
+// https://pinyin-pro.cn/en/use/addDict.html#using-the-modern-chinese-dictionary
+export async function loadDict() {
+  addDict((await import('@pinyin-pro/data/modern')).default)
+  dictLoaded.value = true
+}
+
+export function pinyinOf(s: string) {
+  void dictLoaded.value // reactive callers re-run once the dictionary arrives
+  return pinyin(s)
+}
 
 export const resolve = (card: Card) => ({
   traditional: card.traditional ?? traditional(card.front),

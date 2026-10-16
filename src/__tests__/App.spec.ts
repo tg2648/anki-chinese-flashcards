@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { nextTick } from 'vue'
 import { mount, type VueWrapper } from '@vue/test-utils'
 import App from '../App.vue'
-import { downloadTsv } from '@/cards'
+import { downloadTsv, loadDict } from '@/cards'
 
 vi.mock('@/cards', async (importOriginal) => ({
   ...(await importOriginal<typeof import('@/cards')>()),
@@ -42,6 +42,14 @@ describe('App', () => {
     await type('Simplified (Front)', '学习')
     expect(value('Traditional')).toBe('學習')
     expect(value('Pinyin')).toBe('xué xí')
+  })
+
+  it('updates Pinyin when the modern dictionary arrives', async () => {
+    await type('Simplified (Front)', '京都')
+    expect(value('Pinyin')).toBe('jīng dōu')
+    await loadDict()
+    await nextTick()
+    expect(value('Pinyin')).toBe('jīng dū')
   })
 
   it('waits for IME composition to end', async () => {

@@ -2,6 +2,7 @@ import { describe, it, expect, vi, afterEach } from 'vitest'
 import {
   blank,
   downloadTsv,
+  loadDict,
   pinyinOf,
   resolve,
   toAnkiTsv,
@@ -27,6 +28,11 @@ describe('pinyinOf', () => {
     expect(pinyinOf('中国')).toBe('zhōng guó')
     expect(pinyinOf('银行')).toBe('yín háng')
     expect(pinyinOf('')).toBe('')
+  })
+
+  it('uses the modern dictionary once loaded', async () => {
+    await loadDict()
+    expect(pinyinOf('日本京都大学')).toBe('rì běn jīng dū dà xué')
   })
 })
 

@@ -73,12 +73,12 @@ function download() {
     <table>
       <thead>
         <tr>
-          <th>Simplified</th>
-          <th>Traditional</th>
-          <th>Pinyin</th>
-          <th>English</th>
+          <th>Simplified (Front)</th>
+          <th>English (Back)</th>
           <th>Example</th>
           <th>Example Translation</th>
+          <th>Traditional</th>
+          <th>Pinyin</th>
           <th></th>
         </tr>
       </thead>
@@ -89,8 +89,11 @@ function download() {
           :class="{ missing: !row.front.trim() && !isEmpty(row) }"
         >
           <td>
-            <input v-model="row.front" aria-label="Simplified" @input="resetEdits(row)" />
+            <input v-model="row.front" aria-label="Simplified (Front)" @input="resetEdits(row)" />
           </td>
+          <td><input v-model="row.back" aria-label="English (Back)" /></td>
+          <td><input v-model="row.example" aria-label="Example" /></td>
+          <td><input v-model="row.exampleTranslation" aria-label="Example Translation" /></td>
           <td>
             <input
               :value="resolve(row).traditional"
@@ -109,9 +112,6 @@ function download() {
               @change="restoreIfBlank(row, 'pinyin')"
             />
           </td>
-          <td><input v-model="row.back" aria-label="English" /></td>
-          <td><input v-model="row.example" aria-label="Example" /></td>
-          <td><input v-model="row.exampleTranslation" aria-label="Example Translation" /></td>
           <td>
             <button v-if="i < rows.length - 1" aria-label="Remove row" @click="remove(row)">
               ✕

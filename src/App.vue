@@ -21,6 +21,7 @@ function load(): Card[] {
 const rows = ref<Card[]>(load())
 const deck = ref(localStorage.getItem('anki-deck') ?? '')
 const notetype = ref(localStorage.getItem('anki-notetype') ?? '')
+const showExamples = ref(true)
 
 watch(
   rows,
@@ -69,14 +70,17 @@ function download() {
       <label>Deck <input v-model="deck" placeholder="Chinese::HSK1" /></label>
       <label>Note type <input v-model="notetype" placeholder="Chinese" /></label>
     </div>
+    <label class="toggle">
+      <input v-model="showExamples" type="checkbox" /> Add Example fields
+    </label>
 
     <table>
       <thead>
         <tr>
           <th>Simplified (Front)</th>
           <th>English (Back)</th>
-          <th>Example</th>
-          <th>Example Translation</th>
+          <th v-if="showExamples">Example</th>
+          <th v-if="showExamples">Example Translation</th>
           <th>Traditional</th>
           <th>Pinyin</th>
           <th></th>
@@ -92,13 +96,9 @@ function download() {
             <input v-model="row.front" aria-label="Simplified (Front)" @input="resetEdits(row)" />
           </td>
           <td><input v-model="row.back" aria-label="English (Back)" /></td>
-          <td><input v-model="row.example" tabindex="-1" aria-label="Example" /></td>
-          <td>
-            <input
-              v-model="row.exampleTranslation"
-              tabindex="-1"
-              aria-label="Example Translation"
-            />
+          <td v-if="showExamples"><input v-model="row.example" aria-label="Example" /></td>
+          <td v-if="showExamples">
+            <input v-model="row.exampleTranslation" aria-label="Example Translation" />
           </td>
           <td>
             <input
@@ -253,6 +253,17 @@ input {
 input:focus-visible {
   border-color: var(--accent);
   box-shadow: 0 0 0 3px var(--accent-soft);
+}
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+.toggle input {
+  width: auto;
 }
 table {
   width: 100%;

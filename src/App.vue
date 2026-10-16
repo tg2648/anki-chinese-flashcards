@@ -154,6 +154,11 @@ function download() {
         value.
       </li>
     </ul>
+
+    <p class="hint">
+      Built with <a href="https://github.com/nk2028/opencc-js">opencc-js</a> and
+      <a href="https://github.com/zh-lx/pinyin-pro">pinyin-pro</a>.
+    </p>
   </main>
 </template>
 

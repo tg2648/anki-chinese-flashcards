@@ -12,3 +12,8 @@ npm run dev        # dev server
 npx vitest run     # tests
 npm run build      # type-check and build
 ```
+
+## Credits
+
+- [opencc-js](https://github.com/nk2028/opencc-js) for Simplified to Traditional conversion
+- [pinyin-pro](https://github.com/zh-lx/pinyin-pro) for pinyin
